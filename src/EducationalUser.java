@@ -1,0 +1,5 @@
+public interface EducationalUser {
+    boolean login(String username, String password);
+    boolean logout();
+    void viewProfile();
+}
