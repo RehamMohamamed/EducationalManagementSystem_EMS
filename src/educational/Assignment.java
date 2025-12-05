@@ -1,3 +1,5 @@
+package educational;
+
 public class Assignment{
     private String assignmentTitle;
     private String assignmentID;
@@ -8,13 +10,12 @@ public class Assignment{
     private String correctSolution;
 
     public Assignment(){}
-    public Assignment(String assignmentTitle, String assignmentID, String assignmentDescription, float maxGrade, float studentGrade, String studentSolution){
+    public Assignment(String assignmentTitle, String assignmentID, String assignmentDescription, float maxGrade){
         this.assignmentTitle = assignmentTitle;
         this.assignmentID = assignmentID;
         this.assignmentDescription = assignmentDescription;
         this.maxGrade = maxGrade;
-        this.studentGrade = studentGrade;
-        this.studentSolution = studentSolution;
+
     }
 
     // getters & setters
@@ -70,6 +71,6 @@ public class Assignment{
 
     @Override
     public String toString() {
-        return "Assignment Title: " + assignmentTitle + ", Asssignement ID: " + assignmentID + ", Assignment description: " + assignmentDescription;
+        return "educational.Assignment Title: " + assignmentTitle + ", Asssignement ID: " + assignmentID + ", educational.Assignment description: " + assignmentDescription;
     }
 }

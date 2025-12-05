@@ -1,3 +1,5 @@
+package educational;
+import educational.Assignment.* ;
 import java.util.ArrayList;
 
 public class Doctor extends User {
@@ -21,13 +23,13 @@ public class Doctor extends User {
     }
 
     //methods
-    public void createCoursse (String courseName , String courseID) {
-       Course newCourse = new Course(courseName , courseID , this);
+    public void createCoursse (String courseName , String courseID , Level level) {
+       Course newCourse = new Course(courseName , courseID , this , level);
        teachingCourses.add(newCourse);
     }
 
     //unfinished yet
-    public void createAssignment (String assignmentName , String assignmentID) {}
-
+    public void createAssignment (String assignmentName , String assignmentID , String description , float maxGrade ) {}
+//    Assignment a = new Assignment(assignmentName , assignmentID , description , maxGrade);
 
 }

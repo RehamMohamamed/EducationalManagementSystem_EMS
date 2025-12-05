@@ -1,17 +1,25 @@
+package educational;
+
 import java.util.ArrayList;
+import educational.Level;
 
 public class Course {
     private ArrayList<Assignment> assignments = new ArrayList<Assignment>();
     private ArrayList <Student> students = new ArrayList<>();
+    private ArrayList<Course> allCourses = new ArrayList<>();
     private String courseName;
     private String courseCode;
     private Doctor doctor;
+    private Level level;
 
     public Course() {}
-    public Course(String courseName, String courseCode, Doctor doctor) {
+    public Course(String courseName, String courseCode, Doctor doctor , Level level) {
         this.courseName = courseName;
         this.courseCode = courseCode;
         this.doctor = doctor;
+        this.level = level;
+
+        allCourses.add(this);
     }
 
     // getters & setters
@@ -33,7 +41,8 @@ public class Course {
     public void setDoctor(Doctor doctor) {
         this.doctor = doctor;
     }
-
+    public Level getLevel() {return level;}
+    public void setLevel(Level level) {this.level = level;}
     // methods
 
     public void addStudent(Student student) {
@@ -46,7 +55,7 @@ public class Course {
 
     @Override
     public String toString () {
-        return "Course name: " + courseName + ", Course code: " + courseCode;
+        return "educational.Course name: " + courseName + ", educational.Course code: " + courseCode;
     }
 
 }
