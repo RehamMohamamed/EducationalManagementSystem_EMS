@@ -79,6 +79,8 @@ public class Student extends User {
             for (Assignment assignment : submittedAssignments) {
                 System.out.println(assignment.getStudentSolution());
             }
+        }else{
+            System.out.println("No solutions");
         }
     }
 
