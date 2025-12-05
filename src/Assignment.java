@@ -68,4 +68,8 @@ public class Assignment{
         this.studentSolution += solution;
     }
 
+    @Override
+    public String toString() {
+        return "Assignment Title: " + assignmentTitle + ", Asssignement ID: " + assignmentID + ", Assignment description: " + assignmentDescription;
+    }
 }
