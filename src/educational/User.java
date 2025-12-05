@@ -1,3 +1,5 @@
+package educational;
+
 public class User implements EducationalUser {
     // attributes
         protected String userName;
@@ -37,8 +39,8 @@ public class User implements EducationalUser {
     }
     public void viewProfile(){
         System.out.println("Full Name: " + this.fullName);
-        System.out.println("User Name: " + this.userName);
-        System.out.println("User ID: " + this.userID);
+        System.out.println("educational.User Name: " + this.userName);
+        System.out.println("educational.User ID: " + this.userID);
         System.out.println("Email: " + this.email);
     }
 

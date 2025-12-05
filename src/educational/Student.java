@@ -1,10 +1,11 @@
+package educational;
+
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Student extends User {
     private ArrayList <Course> registeredCourses = new ArrayList<>();
     private ArrayList <Assignment> allAssignments = new ArrayList<>();
-    private ArrayList <Assignment> submittedAssignments = new ArrayList<>();
+    public ArrayList <Assignment> submittedAssignments = new ArrayList<>();
     // constructors
     public Student () {}
     public Student (String userName , String password , String userID ,String fullName ,String email) {
@@ -31,11 +32,11 @@ public class Student extends User {
                 course.addStudent(this);
             }
             else {
-                System.out.println("Course already registered");
+                System.out.println("educational.Course already registered");
             }
         }
         else {
-            System.out.println("Course is invalid");
+            System.out.println("educational.Course is invalid");
         }
     }
 
@@ -54,12 +55,15 @@ public class Student extends User {
             }
         }
         else
-            System.out.println("Course list is empty");
+            System.out.println("educational.Course list is empty");
     }
 
     // مش عارف اشتغل فيها
-    public void viewAllCourses () {
-
+    public void viewAllCourses (Level level) {
+        System.out.println("Courses for level " + level + " : ");
+            for(String course : level.getCourses()) {
+                System.out.println("- " + course);
+            }
     }
 
     public void viewAllAssignments () {
