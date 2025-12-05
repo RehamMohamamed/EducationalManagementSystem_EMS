@@ -41,4 +41,5 @@ public class User implements EducationalUser {
         System.out.println("User ID: " + this.userID);
         System.out.println("Email: " + this.email);
     }
+
 }
