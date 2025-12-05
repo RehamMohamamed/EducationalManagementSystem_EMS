@@ -6,7 +6,7 @@ public class Assignment{
     private String assignmentDescription;
     private float maxGrade;
     private float studentGrade;
-    private String studentSolution;
+    private String studentSolution = "";
     private String correctSolution;
 
     public Assignment(){}
@@ -54,9 +54,9 @@ public class Assignment{
     public String getStudentSolution() {
         return studentSolution;
     }
-    public void setStudentSolution(String studentSolution) {
-        this.studentSolution = studentSolution;
-    }
+//    public void setStudentSolution(String studentSolution) {
+//        this.studentSolution = studentSolution;
+//    }
     public String getCorrectSolution() {
         return correctSolution;
     }
