@@ -29,8 +29,8 @@ public class Doctor extends User {
     }
 
 
-    public void createAssignment (String assignmentName , String assignmentID , String description , float maxGrade ) {
-        new Assignment(assignmentName , assignmentID , description , maxGrade);
+    public void createAssignment (String assignmentName , String assignmentID , String description , float maxGrade , Course course) {
+        new Assignment(assignmentName , assignmentID , description , maxGrade , course);
     }
 
 
