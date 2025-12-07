@@ -71,7 +71,12 @@ public class Doctor extends User {
 
 
 
-
+    @Override
+    public String toString() {
+        return "Doctor: " + fullName +
+                "Id: " + userID +
+                "Email: " + email;
+    }
 
 
 

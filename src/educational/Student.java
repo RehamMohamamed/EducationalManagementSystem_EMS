@@ -139,6 +139,11 @@ public class Student extends User {
         }
     }
 
-
+    @Override
+    public String toString() {
+        return "Student: " + fullName +
+                "Id: " + userID +
+                "Email: " + email;
+    }
 
 }
