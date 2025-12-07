@@ -9,7 +9,7 @@ public class Doctor extends User {
     private ArrayList <Assignment> assignments = new ArrayList<>();
     //constructors
     public Doctor() {}
-    public Doctor(String userName, String password ,String userID , String fullName , String email) {
+    public Doctor(String userName, String password ,int userID , String fullName , String email) {
         super(userName , password , userID , fullName , email);
     }
 

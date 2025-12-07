@@ -8,7 +8,7 @@ public class Student extends User {
     public ArrayList <Assignment> submittedAssignments = new ArrayList<>();
     // constructors
     public Student () {}
-    public Student (String userName , String password , String userID ,String fullName ,String email) {
+    public Student (String userName , String password , int userID ,String fullName ,String email) {
         super(userName , password , userID , fullName , email);
     }
     //getters
