@@ -52,6 +52,9 @@ public class Course {
     public void removeStudent(Student student) {
         students.remove(student);
     }
+    public void addAssignment(Assignment assignment) {
+        assignments.add(assignment);
+    }
 
     @Override
     public String toString () {

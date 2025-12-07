@@ -41,10 +41,23 @@ public class Student extends User {
     }
 
     // submit solution
-    public void submitAssignment (Assignment assignment , String solution) {
+    public void submitAssignment(Assignment assignment, String solution) {
+
+        // Check if student already submitted
+        if (submittedAssignments.contains(assignment)) {
+            System.out.println("You already submitted this assignment!");
+            return;
+        }
+
+        // store assignment
         submittedAssignments.add(assignment);
-        assignment.addSolution(solution , this);
+
+        // send solution to assignment
+        assignment.addSolution(this, solution);
+
+        System.out.println("Solution submitted successfully!");
     }
+
 
     // view registered courses
     public void viewRegisterdCourses () {
@@ -78,28 +91,47 @@ public class Student extends User {
 
 
     // Implement this
-    public void viewSolutions () {
-        if(submittedAssignments != null) {
-            for (Assignment assignment : submittedAssignments) {
-                System.out.println(assignment.getStudentSolution());
-            }
-        }else{
-            System.out.println("No solutions");
+    public void viewSolutions() {
+
+        if (submittedAssignments.isEmpty()) {
+            System.out.println("No submitted assignments yet.");
+            return;
+        }
+
+        for (Assignment assignment : submittedAssignments) {
+            String solution = assignment.getSolution(this);
+            System.out.println("Assignment: " + assignment.getAssignmentTitle());
+            System.out.println("Your solution: " + solution);
+            System.out.println("-------------------------------------------");
         }
     }
 
 
-    public void viewGrades () {
-        if(submittedAssignments != null) {
-            for (Assignment assignment : submittedAssignments) {
-                System.out.println("The " + assignment.getCourse() + " grade is " + assignment.getStudentGrade());
-            }
-        }
-        else{
-            System.out.println("No solutions !");
+
+    public void viewGrades() {
+
+        if (submittedAssignments.isEmpty()) {
+            System.out.println("No submitted assignments yet!");
+            return;
         }
 
+        System.out.println("===== Your Grades =====");
+
+        for (Assignment assignment : submittedAssignments) {
+
+            Float grade = assignment.getGrade(this);  // الدرجة الخاصة بهذا الطالب
+
+            System.out.println("Assignment: " + assignment.getAssignmentTitle());
+
+            if (grade == null)
+                System.out.println("Grade: Not graded yet.");
+            else
+                System.out.println("Grade: " + grade + " / " + assignment.getMaxGrade());
+
+            System.out.println("------------------------------------");
+        }
     }
+
 
 
 }

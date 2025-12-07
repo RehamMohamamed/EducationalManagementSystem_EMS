@@ -1,12 +1,17 @@
 package educational;
 
+import java.awt.geom.Arc2D;
+import java.util.HashMap;
+
 public class Assignment{
     private String assignmentTitle;
     private String assignmentID;
     private String assignmentDescription;
     private float maxGrade;
     private float studentGrade;
-    private String studentSolution = "";
+//    private String studentSolution = "";
+    private HashMap <Student , String> solutions = new HashMap<>();
+    private HashMap <Student , Float> grades = new HashMap<>();
     private String correctSolution;
     private Course course;
 
@@ -56,9 +61,9 @@ public class Assignment{
     public void setStudentGrade(float studentGrade) {
         this.studentGrade = studentGrade;
     }
-    public String getStudentSolution() {
-        return studentSolution;
-    }
+//    public String getStudentSolution() {
+//        return studentSolution;
+//    }
 //    public void setStudentSolution(String studentSolution) {
 //        this.studentSolution = studentSolution;
 //    }
@@ -70,8 +75,24 @@ public class Assignment{
     }
 
     //methods
-    public void addSolution(String solution , Student student) {
-        this.studentSolution += solution;
+//    public void addSolution(String solution , Student student) {
+//        this.studentSolution += solution;
+//    }
+
+    public void addSolution(Student student, String solution) {
+        solutions.put(student, solution);
+    }
+
+    public String getSolution(Student student) {
+        return solutions.get(student);
+    }
+
+    public void setGrade(Student student, float grade) {
+        grades.put(student, grade);
+    }
+
+    public Float getGrade(Student student) {
+        return grades.get(student);
     }
 
 

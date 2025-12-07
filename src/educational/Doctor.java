@@ -1,6 +1,7 @@
 package educational;
 import educational.Assignment.* ;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Doctor extends User {
     // doctor's cousrse & assignments list
@@ -30,8 +31,49 @@ public class Doctor extends User {
 
 
     public void createAssignment (String assignmentName , String assignmentID , String description , float maxGrade , Course course) {
-        new Assignment(assignmentName , assignmentID , description , maxGrade , course);
+       Assignment a = new Assignment(assignmentName , assignmentID , description , maxGrade , course);
+       this.assignments.add(a);
+       course.addAssignment(a);
     }
+
+    public void gradeAssignment(Student student, Assignment assignment) {
+
+        Scanner in = new Scanner(System.in);
+
+        // check if the student submitted
+        String solution = assignment.getSolution(student);
+
+        if (solution == null) {
+            System.out.println("Student did not submit this assignment!");
+            return;
+        }
+
+        // show the student's solution first
+        System.out.println("----- Student Solution -----");
+        System.out.println(solution);
+        System.out.println("----------------------------");
+
+        // ask doctor to enter grade
+        System.out.print("Enter grade for " + student.getUserName() + ": ");
+        float grade = in.nextFloat();
+
+        // validate grade
+        if (grade < 0 || grade > assignment.getMaxGrade()) {
+            System.out.println("Invalid grade! Must be between 0 and " + assignment.getMaxGrade());
+            return;
+        }
+
+        // save grade
+        assignment.setGrade(student, grade);
+
+        System.out.println("Grade added successfully!");
+    }
+
+
+
+
+
+
 
 
 }
