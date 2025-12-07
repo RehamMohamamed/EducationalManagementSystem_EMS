@@ -83,7 +83,12 @@ public class Assignment{
 //    }
 
     public void addSolution(Student student, String solution) {
-        solutions.put(student.userID, solution);
+        if(!solutions.containsKey(student.userID)){
+            solutions.put(student.userID, solution);
+        }
+        else{
+            System.out.println("You already submitted the assignment!");
+        }
     }
 
     public String getSolution(Student student) {

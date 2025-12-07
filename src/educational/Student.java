@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Student extends User {
     private ArrayList <Course> registeredCourses = new ArrayList<>();
     private ArrayList <Assignment> allAssignments = new ArrayList<>();
-    public ArrayList <Assignment> submittedAssignments = new ArrayList<>();
+    private ArrayList <Assignment> submittedAssignments = new ArrayList<>();
     // constructors
     public Student () {}
     public Student (String userName , String password , int userID ,String fullName ,String email) {
@@ -21,7 +21,7 @@ public class Student extends User {
     }
 
     public ArrayList<Assignment> getSubmittedAssignments() {
-        return submittedAssignments;
+        return new ArrayList<>(submittedAssignments);
     }
 
     // methods
