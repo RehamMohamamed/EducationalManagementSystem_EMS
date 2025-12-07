@@ -10,8 +10,8 @@ public class Assignment{
     private float maxGrade;
     private float studentGrade;
 //    private String studentSolution = "";
-    private HashMap <Student , String> solutions = new HashMap<>();
-    private HashMap <Student , Float> grades = new HashMap<>();
+    private HashMap <Integer , String> solutions = new HashMap<>();
+    private HashMap <Integer , Float> grades = new HashMap<>();
     private String correctSolution;
     private Course course;
 
@@ -83,19 +83,19 @@ public class Assignment{
 //    }
 
     public void addSolution(Student student, String solution) {
-        solutions.put(student, solution);
+        solutions.put(student.userID, solution);
     }
 
     public String getSolution(Student student) {
-        return solutions.get(student);
+        return solutions.get(student.userID);
     }
 
     public void setGrade(Student student, float grade) {
-        grades.put(student, grade);
+        grades.put(student.userID, grade);
     }
 
     public Float getGrade(Student student) {
-        return grades.get(student);
+        return grades.get(student.userID);
     }
 
 

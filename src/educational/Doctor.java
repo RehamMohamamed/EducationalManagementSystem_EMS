@@ -34,7 +34,6 @@ public class Doctor extends User {
        Assignment a = new Assignment(assignmentName , assignmentID , description , maxGrade , course);
        this.assignments.add(a);
        course.addAssignment(a);
-       course.getAssignments().add(a);
     }
 
     public void gradeAssignment(Student student, Assignment assignment) {

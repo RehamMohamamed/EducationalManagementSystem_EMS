@@ -4,14 +4,14 @@ public class User implements EducationalUser {
     // attributes
         protected String userName;
         protected String password;
-        protected String userID;
+        protected int userID;
         protected String fullName;
         protected String email;
 
     // constructors
     public User() {}
 
-    public User(String userName, String password, String userID, String fullName, String email) {
+    public User(String userName, String password, int userID, String fullName, String email) {
         this.userName = userName;
         this.password = password;
         this.userID = userID;
