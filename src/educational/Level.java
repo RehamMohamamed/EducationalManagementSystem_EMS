@@ -60,6 +60,4 @@ Level(String[] courses) {
 public String[] getCourses() {
     return courses;
 }
-
-
 }

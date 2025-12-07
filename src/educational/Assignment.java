@@ -61,12 +61,14 @@ public class Assignment{
     public void setStudentGrade(float studentGrade) {
         this.studentGrade = studentGrade;
     }
+
 //    public String getStudentSolution() {
 //        return studentSolution;
 //    }
 //    public void setStudentSolution(String studentSolution) {
 //        this.studentSolution = studentSolution;
 //    }
+
     public String getCorrectSolution() {
         return correctSolution;
     }
@@ -75,6 +77,7 @@ public class Assignment{
     }
 
     //methods
+
 //    public void addSolution(String solution , Student student) {
 //        this.studentSolution += solution;
 //    }

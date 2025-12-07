@@ -40,9 +40,12 @@ public class Student extends User {
         }
     }
 
-    // submit solution
-    public void submitAssignment(Assignment assignment, String solution) {
 
+    public void submitAssignment(Assignment assignment, String solution) {
+        if(!registeredCourses.contains(assignment.getCourse())){
+            System.out.println("You are not registered in this course");
+            return;
+        }
         // Check if student already submitted
         if (submittedAssignments.contains(assignment)) {
             System.out.println("You already submitted this assignment!");
@@ -90,7 +93,7 @@ public class Student extends User {
     }
 
 
-    // Implement this
+
     public void viewSolutions() {
 
         if (submittedAssignments.isEmpty()) {
@@ -119,7 +122,7 @@ public class Student extends User {
 
         for (Assignment assignment : submittedAssignments) {
 
-            Float grade = assignment.getGrade(this);  // الدرجة الخاصة بهذا الطالب
+            Float grade = assignment.getGrade(this);
 
             System.out.println("Assignment: " + assignment.getAssignmentTitle());
 
