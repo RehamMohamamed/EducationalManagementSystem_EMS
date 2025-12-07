@@ -6,16 +6,17 @@ public class Assignment{
     private String assignmentDescription;
     private float maxGrade;
     private float studentGrade;
-    private String studentSolution;
+    private String studentSolution = "";
     private String correctSolution;
+    private Course course;
 
     public Assignment(){}
-    public Assignment(String assignmentTitle, String assignmentID, String assignmentDescription, float maxGrade){
+    public Assignment(String assignmentTitle, String assignmentID, String assignmentDescription, float maxGrade , Course course){
         this.assignmentTitle = assignmentTitle;
         this.assignmentID = assignmentID;
         this.assignmentDescription = assignmentDescription;
         this.maxGrade = maxGrade;
-
+        this.course = course;
     }
 
     // getters & setters
@@ -47,6 +48,10 @@ public class Assignment{
         return studentGrade;
     }
 
+    public Course getCourse() {
+        return course;
+    }
+
     // set grade
     public void setStudentGrade(float studentGrade) {
         this.studentGrade = studentGrade;
@@ -54,9 +59,9 @@ public class Assignment{
     public String getStudentSolution() {
         return studentSolution;
     }
-    public void setStudentSolution(String studentSolution) {
-        this.studentSolution = studentSolution;
-    }
+//    public void setStudentSolution(String studentSolution) {
+//        this.studentSolution = studentSolution;
+//    }
     public String getCorrectSolution() {
         return correctSolution;
     }
@@ -68,6 +73,7 @@ public class Assignment{
     public void addSolution(String solution , Student student) {
         this.studentSolution += solution;
     }
+
 
     @Override
     public String toString() {

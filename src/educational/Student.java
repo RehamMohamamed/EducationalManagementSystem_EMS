@@ -58,7 +58,7 @@ public class Student extends User {
             System.out.println("educational.Course list is empty");
     }
 
-    // مش عارف اشتغل فيها
+
     public void viewAllCourses (Level level) {
         System.out.println("Courses for level " + level + " : ");
             for(String course : level.getCourses()) {
@@ -87,5 +87,19 @@ public class Student extends User {
             System.out.println("No solutions");
         }
     }
+
+
+    public void viewGrades () {
+        if(submittedAssignments != null) {
+            for (Assignment assignment : submittedAssignments) {
+                System.out.println("The " + assignment.getCourse() + " grade is " + assignment.getStudentGrade());
+            }
+        }
+        else{
+            System.out.println("No solutions !");
+        }
+
+    }
+
 
 }

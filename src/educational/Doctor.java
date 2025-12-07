@@ -24,12 +24,14 @@ public class Doctor extends User {
 
     //methods
     public void createCoursse (String courseName , String courseID , Level level) {
-       Course newCourse = new Course(courseName , courseID , this , level);
-       teachingCourses.add(newCourse);
+        Course newCourse = new Course(courseName , courseID , this , level);
+        teachingCourses.add(newCourse);
     }
 
-    //unfinished yet
-    public void createAssignment (String assignmentName , String assignmentID , String description , float maxGrade ) {}
-//    Assignment a = new Assignment(assignmentName , assignmentID , description , maxGrade);
+
+    public void createAssignment (String assignmentName , String assignmentID , String description , float maxGrade , Course course) {
+        new Assignment(assignmentName , assignmentID , description , maxGrade , course);
+    }
+
 
 }
