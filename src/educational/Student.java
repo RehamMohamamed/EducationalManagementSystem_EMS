@@ -30,13 +30,16 @@ public class Student extends User {
             if(!registeredCourses.contains(course)) {
                 registeredCourses.add(course);
                 course.addStudent(this);
+                for(Course c : registeredCourses) {
+                    allAssignments.addAll(c.getAssignments());
+                }
             }
             else {
-                System.out.println("educational.Course already registered");
+                System.out.println("Course already registered");
             }
         }
         else {
-            System.out.println("educational.Course is invalid");
+            System.out.println("Course is invalid");
         }
     }
 

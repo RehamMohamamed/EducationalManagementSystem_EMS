@@ -43,6 +43,9 @@ public class Course {
     public Level getLevel() {return level;}
     public void setLevel(Level level) {this.level = level;}
     public static ArrayList<Course> getAllCourses() {return allCourses;}
+    public ArrayList<Assignment> getAssignments() {
+        return assignments;
+    }
     // methods
 
     public void addStudent(Student student) {

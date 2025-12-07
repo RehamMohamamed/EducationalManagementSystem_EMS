@@ -9,8 +9,8 @@ public class Doctor extends User {
     private ArrayList <Assignment> assignments = new ArrayList<>();
     //constructors
     public Doctor() {}
-    public Doctor(String userName, String password , String email , String fullName , String userID) {
-        super(userName , password , email , fullName , userID);
+    public Doctor(String userName, String password ,String userID , String fullName , String email) {
+        super(userName , password , userID , fullName , email);
     }
 
     // getters
@@ -34,6 +34,7 @@ public class Doctor extends User {
        Assignment a = new Assignment(assignmentName , assignmentID , description , maxGrade , course);
        this.assignments.add(a);
        course.addAssignment(a);
+       course.getAssignments().add(a);
     }
 
     public void gradeAssignment(Student student, Assignment assignment) {
