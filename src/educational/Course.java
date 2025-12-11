@@ -49,7 +49,12 @@ public class Course {
     // methods
 
     public void addStudent(Student student) {
-        students.add(student);
+        if(!students.contains(student)) {
+            students.add(student);
+        }
+        else {
+            System.out.println("Student already registered!");
+        }
     }
 
     public void removeStudent(Student student) {
@@ -61,7 +66,7 @@ public class Course {
 
     @Override
     public String toString () {
-        return "educational.Course name: " + courseName + ", educational.Course code: " + courseCode;
+        return "name: " + courseName + ", educational.Course code: " + courseCode;
     }
 
 }

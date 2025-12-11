@@ -5,24 +5,56 @@ package educational;
 public class Main {
     public static void main(String[] args) {
 //        Test
-       Doctor doctor = new Doctor("Ahmedabo7med" , "12354a" , 1234869 , "Ahmed Mohamed" , "abo7med22@gmail.com");
-       Course course = new Course("Programing" , "CS112" ,doctor , Level.ONE);
-       Student student = new Student("crisTarek12" , "123456kok" , 20245789 , "Cristian Tarek" , "crisTarek22@gmail.com");
-       doctor.createAssignment("lec1" , "123" , "this is lec 1" , 10 , course);
-       student.registerCourse(course);
-       student.viewAllAssignments();
 
-//
+        // --- Create Doctors ---
+        Doctor doc1 = new Doctor("ahmed", "123", 101, "Ahmed Mohamed", "ahmed@example.com");
+        Doctor doc2 = new Doctor("sara", "456", 102, "Sara Ali", "sara@example.com");
 
-//       doctor.createAssignment("lec 1" , "101" , "assignment 1" , 100);
-//       Assignment a = new Assignment("lec 1" , "101" , "assignment 1" , 100 , course);
-//
-//       student.submitAssignment(a , "solution 1");
-//
-//       Assignment a1 = new Assignment("lec 1" , "101" , "assignment 1" , 100);
+        // --- Create Students ---
+        Student s1 = new Student("mohamed", "pass1", 201, "Mohamed Tarek", "mohamed@example.com");
+        Student s2 = new Student("laila", "pass2", 202, "Laila Hassan", "laila@example.com");
+        Student s3 = new Student("omar", "pass3", 203, "Omar Khaled", "omar@example.com");
 
-      // student.submitAssignment(a1 , "solution 2");
+        // --- Create Courses ---
+        Course c1 = new Course("Java Programming", "CS101", doc1, Level.ONE);
+        Course c2 = new Course("Data Structures", "CS102", doc2, Level.TWO);
 
+        // --- Register Students to Courses ---
+        s1.registerCourse(c1);
+        s2.registerCourse(c1);
+        s2.registerCourse(c2);
+        s3.registerCourse(c2);
+
+        // --- Create Assignments ---
+        doc1.createAssignment("Assignment 1", "A101", "Java Basics", 100, c1);
+        doc2.createAssignment("Assignment 2", "A102", "Linked Lists", 100, c2);
+
+        // --- Students submit solutions ---
+        s1.submitAssignment(c1.getAssignments().get(0), "Solution by Mohamed");
+        s2.submitAssignment(c1.getAssignments().get(0), "Solution by Laila");
+        s2.submitAssignment(c2.getAssignments().get(0), "Solution by Laila for DS");
+        s3.submitAssignment(c2.getAssignments().get(0), "Solution by Omar");
+
+        // --- Doctor grades assignments ---
+        doc1.gradeAssignment(s1, c1.getAssignments().get(0), 95);
+        doc1.gradeAssignment(s2, c1.getAssignments().get(0), 88);
+        doc2.gradeAssignment(s2, c2.getAssignments().get(0), 90);
+        doc2.gradeAssignment(s3, c2.getAssignments().get(0), 85);
+
+        // --- Display Courses & Students ---
+        System.out.println("=== Courses ===");
+        System.out.println(c1);
+        System.out.println(c2);
+
+        System.out.println("\n=== Students' Grades ===");
+        s1.viewGrades();
+        s2.viewGrades();
+        s3.viewGrades();
+
+        System.out.println("\n=== Students' Submitted Solutions ===");
+        s1.viewSolutions();
+        s2.viewSolutions();
+        s3.viewSolutions();
 
     }
 
