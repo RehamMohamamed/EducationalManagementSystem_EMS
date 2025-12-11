@@ -23,6 +23,7 @@ public class Doctor extends User {
         return assignments;
     }
 
+
     //methods
     public void createCoursse (String courseName , String courseID , Level level) {
         Course newCourse = new Course(courseName , courseID , this , level);
