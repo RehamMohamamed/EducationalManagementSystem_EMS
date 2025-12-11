@@ -1,12 +1,12 @@
 package educational;
 
 import java.util.ArrayList;
-import educational.Level;
+
 
 public class Course {
     private ArrayList<Assignment> assignments = new ArrayList<Assignment>();
     private ArrayList <Student> students = new ArrayList<>();
-    private ArrayList<Course> allCourses = new ArrayList<>();
+    private static ArrayList <Course> allCourses = new ArrayList<>();
     private String courseName;
     private String courseCode;
     private Doctor doctor;
@@ -18,7 +18,6 @@ public class Course {
         this.courseCode = courseCode;
         this.doctor = doctor;
         this.level = level;
-
         allCourses.add(this);
     }
 
@@ -43,6 +42,10 @@ public class Course {
     }
     public Level getLevel() {return level;}
     public void setLevel(Level level) {this.level = level;}
+    public static ArrayList<Course> getAllCourses() {return allCourses;}
+    public ArrayList<Assignment> getAssignments() {
+        return assignments;
+    }
     // methods
 
     public void addStudent(Student student) {

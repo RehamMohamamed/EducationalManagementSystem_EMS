@@ -8,7 +8,7 @@ public class Student extends User {
     public ArrayList <Assignment> submittedAssignments = new ArrayList<>();
     // constructors
     public Student () {}
-    public Student (String userName , String password , String userID ,String fullName ,String email) {
+    public Student (String userName , String password , int userID ,String fullName ,String email) {
         super(userName , password , userID , fullName , email);
     }
     //getters
@@ -30,24 +30,31 @@ public class Student extends User {
             if(!registeredCourses.contains(course)) {
                 registeredCourses.add(course);
                 course.addStudent(this);
+                for(Course c : registeredCourses) {
+                    allAssignments.addAll(c.getAssignments());
+                }
             }
             else {
-                System.out.println("educational.Course already registered");
+                System.out.println("Course already registered");
             }
         }
         else {
-            System.out.println("educational.Course is invalid");
+            System.out.println("Course is invalid");
         }
     }
 
-    // submit solution
-    public void submitAssignment(Assignment assignment, String solution) {
 
+    public void submitAssignment(Assignment assignment, String solution) {
+        if(!registeredCourses.contains(assignment.getCourse())){
+            System.out.println("You are not registered in this course");
+            return;
+        }
         // Check if student already submitted
         if (submittedAssignments.contains(assignment)) {
             System.out.println("You already submitted this assignment!");
             return;
         }
+
 
         // store assignment
         submittedAssignments.add(assignment);
@@ -90,7 +97,7 @@ public class Student extends User {
     }
 
 
-    // Implement this
+
     public void viewSolutions() {
 
         if (submittedAssignments.isEmpty()) {
@@ -119,7 +126,7 @@ public class Student extends User {
 
         for (Assignment assignment : submittedAssignments) {
 
-            Float grade = assignment.getGrade(this);  // الدرجة الخاصة بهذا الطالب
+            Float grade = assignment.getGrade(this);
 
             System.out.println("Assignment: " + assignment.getAssignmentTitle());
 
@@ -132,6 +139,11 @@ public class Student extends User {
         }
     }
 
-
+    @Override
+    public String toString() {
+        return "Student: " + fullName +
+                "Id: " + userID +
+                "Email: " + email;
+    }
 
 }

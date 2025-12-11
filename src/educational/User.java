@@ -4,14 +4,14 @@ public class User implements EducationalUser {
     // attributes
         protected String userName;
         protected String password;
-        protected String userID;
+        protected int userID;
         protected String fullName;
         protected String email;
 
     // constructors
     public User() {}
 
-    public User(String userName, String password, String userID, String fullName, String email) {
+    public User(String userName, String password, int userID, String fullName, String email) {
         this.userName = userName;
         this.password = password;
         this.userID = userID;
@@ -37,10 +37,11 @@ public class User implements EducationalUser {
     public boolean logout(){
         return true;
     }
+
     public void viewProfile(){
         System.out.println("Full Name: " + this.fullName);
-        System.out.println("educational.User Name: " + this.userName);
-        System.out.println("educational.User ID: " + this.userID);
+        System.out.println("User Name: " + this.userName);
+        System.out.println("User ID: " + this.userID);
         System.out.println("Email: " + this.email);
     }
 

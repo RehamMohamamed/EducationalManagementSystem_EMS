@@ -9,8 +9,8 @@ public class Doctor extends User {
     private ArrayList <Assignment> assignments = new ArrayList<>();
     //constructors
     public Doctor() {}
-    public Doctor(String userName, String password , String email , String fullName , String userID) {
-        super(userName , password , email , fullName , userID);
+    public Doctor(String userName, String password ,int userID , String fullName , String email) {
+        super(userName , password , userID , fullName , email);
     }
 
     // getters
@@ -71,7 +71,12 @@ public class Doctor extends User {
 
 
 
-
+    @Override
+    public String toString() {
+        return "Doctor: " + fullName +
+                "Id: " + userID +
+                "Email: " + email;
+    }
 
 
 
