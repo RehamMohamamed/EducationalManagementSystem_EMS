@@ -1,11 +1,27 @@
 package database;
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 public class DBConnection {
-    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=Student_System;encrypt=true;trustServerCertificate=true;integratedSecurity=true;";
+
+    private static final String URL =
+            "jdbc:sqlserver://DESKTOP-LFEUQ00:1433;" +
+                    "databaseName=Student_System;" +
+                    "encrypt=true;" +
+                    "trustServerCertificate=true;";
+
+    private static final String USER = "ems_user";
+    private static final String PASSWORD = "1234";
+
     public static Connection getConnection() {
         try {
-            return DriverManager.getConnection(URL);
+            Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
+            System.out.println("✅ Database connected successfully");
+            return con;
         } catch (SQLException e) {
+            System.out.println("❌ Database connection failed");
             e.printStackTrace();
             return null;
         }

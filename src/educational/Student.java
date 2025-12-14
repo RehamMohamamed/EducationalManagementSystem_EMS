@@ -30,6 +30,7 @@ public class Student extends User {
             if(!registeredCourses.contains(course)) {
                 registeredCourses.add(course);
                 course.addStudent(this);
+                allAssignments.clear();
                 for(Course c : registeredCourses) {
                     allAssignments.addAll(c.getAssignments());
                 }

@@ -1,4 +1,4 @@
-package DAO;
+package database.DAO;
 import database.DBConnection;
 import java.sql.*;
 import educational.Course;
