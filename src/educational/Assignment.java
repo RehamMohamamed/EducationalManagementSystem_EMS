@@ -1,5 +1,7 @@
 package educational;
 
+import database.DAO.AssignmentDAO;
+
 import java.awt.geom.Arc2D;
 import java.util.HashMap;
 
@@ -83,19 +85,25 @@ public class Assignment{
 //    }
 
     public void addSolution(Student student, String solution) {
-        solutions.put(student.userID, solution);
+        if(!solutions.containsKey(student.getUserID())){
+            AssignmentDAO.saveSolution(student.getUserID(), assignmentID, solution);
+
+        }
+        else{
+            System.out.println("You already submitted the assignment!");
+        }
     }
 
     public String getSolution(Student student) {
-        return solutions.get(student.userID);
+        return AssignmentDAO.getSolution(student.getUserID(), assignmentID);
     }
 
     public void setGrade(Student student, float grade) {
-        grades.put(student.userID, grade);
+        grades.put(student.getUserID(), grade);
     }
 
     public Float getGrade(Student student) {
-        return grades.get(student.userID);
+        return grades.get(student.getUserID());
     }
 
 

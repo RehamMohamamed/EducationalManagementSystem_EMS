@@ -23,6 +23,7 @@ public class Doctor extends User {
         return assignments;
     }
 
+
     //methods
     public void createCoursse (String courseName , String courseID , Level level) {
         Course newCourse = new Course(courseName , courseID , this , level);
@@ -36,9 +37,9 @@ public class Doctor extends User {
        course.addAssignment(a);
     }
 
-    public void gradeAssignment(Student student, Assignment assignment) {
+    public void gradeAssignment(Student student, Assignment assignment , float grade) {
 
-        Scanner in = new Scanner(System.in);
+
 
         // check if the student submitted
         String solution = assignment.getSolution(student);
@@ -53,17 +54,13 @@ public class Doctor extends User {
         System.out.println(solution);
         System.out.println("----------------------------");
 
-        // ask doctor to enter grade
-        System.out.print("Enter grade for " + student.getUserName() + ": ");
-        float grade = in.nextFloat();
-
         // validate grade
         if (grade < 0 || grade > assignment.getMaxGrade()) {
             System.out.println("Invalid grade! Must be between 0 and " + assignment.getMaxGrade());
             return;
         }
 
-        // save grade
+
         assignment.setGrade(student, grade);
 
         System.out.println("Grade added successfully!");
