@@ -1,72 +1,48 @@
 package educational;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 public class Course {
-    private ArrayList<Assignment> assignments = new ArrayList<Assignment>();
-    private ArrayList <Student> students = new ArrayList<>();
-    private static ArrayList <Course> allCourses = new ArrayList<>();
+
+    private int courseId;
     private String courseName;
     private String courseCode;
     private Doctor doctor;
-    private Level level;
+
+    private List<Assignment> assignments = new ArrayList<>();
+    private List<Student> students = new ArrayList<>();
 
     public Course() {}
-    public Course(String courseName, String courseCode, Doctor doctor , Level level) {
+
+    public Course(String courseName, String courseCode, Doctor doctor) {
         this.courseName = courseName;
         this.courseCode = courseCode;
         this.doctor = doctor;
-        this.level = level;
-        allCourses.add(this);
     }
 
-    // getters & setters
-    public String getCourseName() {
-        return courseName;
-    }
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-    public String getCourseCode() {
-        return courseCode;
-    }
-    public void setCourseCode(String courseCode) {
-        this.courseCode = courseCode;
-    }
-    public Doctor getDoctor() {
-        return doctor;
-    }
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
-    }
-    public Level getLevel() {return level;}
-    public void setLevel(Level level) {this.level = level;}
-    public static ArrayList<Course> getAllCourses() {return allCourses;}
-    public ArrayList<Assignment> getAssignments() {
-        return assignments;
-    }
-    // methods
+    public int getCourseId() { return courseId; }
+    public void setCourseId(int courseId) { this.courseId = courseId; }
 
-    public void addStudent(Student student) {
-        if(!students.contains(student)) {
-            students.add(student);
-        }
-        else {
-            System.out.println("Student already registered!");
-        }
-    }
+    public String getCourseName() { return courseName; }
+    public void setCourseName(String courseName) { this.courseName = courseName; }
 
-    public void removeStudent(Student student) {
-        students.remove(student);
-    }
-    public void addAssignment(Assignment assignment) {
-        assignments.add(assignment);
-    }
+    public String getCourseCode() { return courseCode; }
+    public void setCourseCode(String courseCode) { this.courseCode = courseCode; }
+
+    public Doctor getDoctor() { return doctor; }
+    public void setDoctor(Doctor doctor) { this.doctor = doctor; }
+
+    public List<Assignment> getAssignments() { return assignments; }
+    public List<Student> getStudents() { return students; }
+
+    public void addStudent(Student student) { students.add(student); }
+    public void removeStudent(Student student) { students.remove(student); }
+    public void addAssignment(Assignment assignment) { assignments.add(assignment); }
+
 
     @Override
-    public String toString () {
-        return "name: " + courseName + ", educational.Course code: " + courseCode;
+    public String toString() {
+        return "Course: " + courseName + " (" + courseCode + ")";
     }
-
 }

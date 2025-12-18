@@ -1,42 +1,36 @@
 package educational;
-import educational.Assignment.* ;
+
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.List;
 
 public class Doctor extends User {
-    // doctor's cousrse & assignments list
-    private ArrayList <Course> teachingCourses = new ArrayList<>();
-    private ArrayList <Assignment> assignments = new ArrayList<>();
-    //constructors
+
+    private List<Course> teachingCourses = new ArrayList<>();
+    private List<Assignment> assignments = new ArrayList<>();
+
     public Doctor() {}
-    public Doctor(String userName, String password ,int userID , String fullName , String email) {
-        super(userName , password , userID , fullName , email);
+
+    public Doctor(String userName, String password,
+                  String firstName, String lastName, String email) {
+        super(userName, password, firstName, lastName, email);
     }
 
-    // getters
-
-    public ArrayList<Course> getTeachingCourses() {
+    public List<Course> getTeachingCourses() {
         return teachingCourses;
     }
 
-    public ArrayList<Assignment> getAssignments() {
+    public List<Assignment> getAssignments() {
         return assignments;
     }
 
-
-    //methods
-    public void createCoursse (String courseName , String courseID , Level level) {
-        Course newCourse = new Course(courseName , courseID , this , level);
-        teachingCourses.add(newCourse);
+    public void addCourse(Course course) {
+        teachingCourses.add(course);
     }
-
-
-    public void createAssignment (String assignmentName , String assignmentID , String description , float maxGrade , Course course) {
-       Assignment a = new Assignment(assignmentName , assignmentID , description , maxGrade , course);
-       this.assignments.add(a);
-       course.addAssignment(a);
+    public void createAssignment(String assignmentName , int assignmentID , String description , float maxGrade , Course course) {
+        Assignment a = new Assignment(assignmentName, assignmentID, description, maxGrade , course);
+        assignments.add(a);
+        course.addAssignment(a);
     }
-
     public void gradeAssignment(Student student, Assignment assignment , float grade) {
 
 
@@ -61,21 +55,15 @@ public class Doctor extends User {
         }
 
 
+
         assignment.setGrade(student, grade);
 
         System.out.println("Grade added successfully!");
     }
 
 
-
     @Override
     public String toString() {
-        return "Doctor: " + fullName +
-                "Id: " + userID +
-                "Email: " + email;
+        return "Doctor: " + getFullName() + " | Email: " + getEmail();
     }
-
-
-
-
 }

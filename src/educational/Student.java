@@ -1,19 +1,22 @@
 package educational;
-import database.DAO.StudentDAO;
 
+import database.DAO.StudentDAO;
 import java.util.ArrayList;
 
 public class Student extends User {
-    private ArrayList <Course> registeredCourses = new ArrayList<>();
-    private ArrayList <Assignment> allAssignments = new ArrayList<>();
-    private ArrayList <Assignment> submittedAssignments = new ArrayList<>();
+    private ArrayList<Course> registeredCourses = new ArrayList<>();
+    private ArrayList<Assignment> allAssignments = new ArrayList<>();
+    private ArrayList<Assignment> submittedAssignments = new ArrayList<>();
+
     // constructors
-    public Student () {}
-    public Student (String userName , String password , int userID ,String fName , String lName , String email) {
-        super(userName , password , fName , lName , email);
+    public Student() {}
+
+    public Student(String userName, String password, int userID, String fName, String lName, String email) {
+        super(userName, password, fName, lName, email);
     }
-    //getters
-    public ArrayList <Course> getRegisteredCourses() {
+
+    // getters
+    public ArrayList<Course> getRegisteredCourses() {
         return registeredCourses;
     }
 
@@ -26,139 +29,98 @@ public class Student extends User {
     }
 
     // methods
-    public void registerCourse (Course course) {
-        if(course != null) {
-            if(!registeredCourses.contains(course)) {
-                StudentDAO.registerInCourse(this.getUserID() , //What can I put here?);
+    public void registerCourse(Course course) {
+        if (course != null) {
+            if (!registeredCourses.contains(course)) {
+                StudentDAO.registerInCourse(this.getUserID(), course.getCourseID());
                 registeredCourses.add(course);
+
                 course.addStudent(this);
                 allAssignments.clear();
-                for(Course c : registeredCourses) {
+                for (Course c : registeredCourses) {
                     allAssignments.addAll(c.getAssignments());
                 }
-            }
-            else {
+            } else {
                 System.out.println("Course already registered");
             }
-        }
-        else {
+        } else {
             System.out.println("Course is invalid");
         }
     }
 
-
     public void submitAssignment(Assignment assignment, String solution) {
-        if(!registeredCourses.contains(assignment.getCourse())){
+        if (!registeredCourses.contains(assignment.getCourse())) {
             System.out.println("You are not registered in this course");
             return;
         }
-        // Check if student already submitted
+
         if (submittedAssignments.contains(assignment)) {
             System.out.println("You already submitted this assignment!");
             return;
         }
 
-
-        // store assignment
         submittedAssignments.add(assignment);
-
-        // send solution to assignment
         assignment.addSolution(this, solution);
 
         System.out.println("Solution submitted successfully!");
     }
 
-
     // view registered courses
-    public void viewRegisterdCourses () {
-        if(registeredCourses != null) {
+    public void viewRegisterdCourses() {
+        if (!registeredCourses.isEmpty()) {
             for (Course course : registeredCourses) {
-                System.out.println(course.toString());
+                System.out.println(course);
                 System.out.println("====================================================================");
             }
+        } else {
+            System.out.println("Course list is empty");
         }
-        else
-            System.out.println("educational.Course list is empty");
     }
 
-
-    public void viewAllCourses (Level level) {
-        System.out.println("Courses for level " + level + " : ");
-            for(String course : level.getCourses()) {
-                System.out.println("- " + course);
-            }
-    }
-
-    public void viewAllAssignments () {
-        if(allAssignments != null) {
+    public void viewAllAssignments() {
+        if (!allAssignments.isEmpty()) {
             for (Assignment assignment : allAssignments) {
-                System.out.println(assignment.toString());
+                System.out.println(assignment);
             }
-        }
-        else
+        } else {
             System.out.println("There are no assignments yet!");
-    }
-
-
-
-    public void viewSolutions() {
-
-        if (submittedAssignments.isEmpty()) {
-            System.out.println("No submitted assignments yet.");
-            return;
-        }
-
-        for (Assignment assignment : submittedAssignments) {
-            String solution = assignment.getSolution(this);
-            System.out.println("Assignment: " + assignment.getAssignmentTitle());
-            System.out.println("Your solution: " + solution);
-            System.out.println("-------------------------------------------");
         }
     }
-
-
 
     public void viewGrades() {
-
         if (submittedAssignments.isEmpty()) {
             System.out.println("No submitted assignments yet!");
             return;
         }
 
         System.out.println("===== Your Grades =====");
-
         for (Assignment assignment : submittedAssignments) {
-
             Float grade = assignment.getGrade(this);
-
             System.out.println("Assignment: " + assignment.getAssignmentTitle());
-
             if (grade == null)
                 System.out.println("Grade: Not graded yet.");
             else
                 System.out.println("Grade: " + grade + " / " + assignment.getMaxGrade());
-
             System.out.println("------------------------------------");
         }
     }
 
-    //Login
+    // Login
     @Override
     public boolean login(String username, String password) {
-        return StudentDAO.login(username , password);
+        return StudentDAO.login(username, password);
     }
 
-    //Sign UP
+    // Sign Up
     @Override
     public void signUp(String username, String password, String fName, String lName, String email) {
-        StudentDAO.register(fName , lName , email , username , password);
+        StudentDAO.register(fName, lName, email, username, password);
     }
 
     @Override
     public String toString() {
-        return "Student: " + fName + " "+ lName +
-                "Id: " + userID +
-                "Email: " + email;
+        return "Student: " + getFullName() +
+               " Id: " + userID +
+               " Email: " + email;
     }
-
 }

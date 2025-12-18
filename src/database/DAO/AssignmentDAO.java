@@ -7,44 +7,59 @@ import java.util.ArrayList;
 
 public class AssignmentDAO {
 
-    // 1. Submit Solution: حفظ الإجابة في جدول Student_assignment
-    public static void saveSolution(int studentId, String assignmentId, String solution) {
-        // نستخدم MERGE أو نتحقق لو موجود نحدث، لو مش موجود ننشئ (هنا INSERT بسيط)
-        String query = "INSERT INTO Student_assignment (student_id, assignment_id, answer) VALUES (?, ?, ?)";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+    // 1. Submit Solution: حفظ الإجابة في جدول مناسب
+    public static void saveSolution(int studentId, int assignmentId, String solution) {
+        String sql = """
+            INSERT INTO Assignment_Submissions(student_id, assignment_id, solution)
+            VALUES (?, ?, ?)
+        """;
 
-            stmt.setInt(1, studentId);
-            stmt.setInt(2, Integer.parseInt(assignmentId));
-            stmt.setString(3, solution);
-            stmt.executeUpdate();
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, studentId);
+            ps.setInt(2, assignmentId);
+            ps.setString(3, solution);
+            ps.executeUpdate();
+
         } catch (SQLException e) {
             System.out.println("Update existing solution logic here if needed.");
+            e.printStackTrace();
         }
     }
 
     // 2. Get Solution: جلب إجابة طالب معينة
-    public static String getSolution(int studentId, String assignmentId) {
-        String query = "SELECT answer FROM Student_assignment WHERE student_id = ? AND assignment_id = ?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+    public static String getSolution(int studentId, int assignmentId) {
+        String sql = """
+            SELECT solution
+            FROM Assignment_Submissions
+            WHERE student_id = ? AND assignment_id = ?
+        """;
 
-            stmt.setInt(1, studentId);
-            stmt.setInt(2, Integer.parseInt(assignmentId));
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) return rs.getString("answer");
-        } catch (SQLException e) { e.printStackTrace(); }
-        return "No solution found.";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, studentId);
+            ps.setInt(2, assignmentId);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next())
+                return rs.getString("solution");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     // 3. Get Grade: جلب الدرجة
-    public static Float getGrade(int studentId, String assignmentId) {
+    public static Float getGrade(int studentId, int assignmentId) {
         String query = "SELECT grade FROM Student_assignment WHERE student_id = ? AND assignment_id = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setInt(1, studentId);
-            stmt.setInt(2, Integer.parseInt(assignmentId));
+            stmt.setInt(2, assignmentId);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 float g = rs.getFloat("grade");
@@ -54,7 +69,6 @@ public class AssignmentDAO {
         return null;
     }
 
-    // Student Class
     // 4. Get All Assignments for Student Courses: جلب كل الواجبات للكورسات اللي الطالب مسجل فيها
     public static ArrayList<Assignment> getAssignmentsForStudent(int studentId) {
         ArrayList<Assignment> list = new ArrayList<>();
