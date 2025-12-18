@@ -1,4 +1,5 @@
 package educational;
+import database.DAO.StudentDAO;
 
 import java.util.ArrayList;
 
@@ -8,8 +9,8 @@ public class Student extends User {
     private ArrayList <Assignment> submittedAssignments = new ArrayList<>();
     // constructors
     public Student () {}
-    public Student (String userName , String password , int userID ,String fullName ,String email) {
-        super(userName , password , userID , fullName , email);
+    public Student (String userName , String password , int userID ,String fName , String lName , String email) {
+        super(userName , password , fName , lName , email);
     }
     //getters
     public ArrayList <Course> getRegisteredCourses() {
@@ -28,6 +29,7 @@ public class Student extends User {
     public void registerCourse (Course course) {
         if(course != null) {
             if(!registeredCourses.contains(course)) {
+                StudentDAO.registerInCourse(this.getUserID() , //What can I put here?);
                 registeredCourses.add(course);
                 course.addStudent(this);
                 allAssignments.clear();
@@ -140,9 +142,21 @@ public class Student extends User {
         }
     }
 
+    //Login
+    @Override
+    public boolean login(String username, String password) {
+        return StudentDAO.login(username , password);
+    }
+
+    //Sign UP
+    @Override
+    public void signUp(String username, String password, String fName, String lName, String email) {
+        StudentDAO.register(fName , lName , email , username , password);
+    }
+
     @Override
     public String toString() {
-        return "Student: " + fullName +
+        return "Student: " + fName + " "+ lName +
                 "Id: " + userID +
                 "Email: " + email;
     }
