@@ -1,5 +1,5 @@
 package educational;
-
+import educational.Course;
 import java.util.ArrayList;
 
 public class Student extends User {
@@ -8,8 +8,8 @@ public class Student extends User {
     private ArrayList <Assignment> submittedAssignments = new ArrayList<>();
     // constructors
     public Student () {}
-    public Student (String userName , String password , int userID ,String fullName ,String email) {
-        super(userName , password , userID , fullName , email);
+    public Student (String userName , String password , String fName , String lName , String email) {
+        super(userName , password ,  fName , lName ,  email);
     }
     //getters
     public ArrayList <Course> getRegisteredCourses() {
@@ -29,6 +29,7 @@ public class Student extends User {
         if(course != null) {
             if(!registeredCourses.contains(course)) {
                 registeredCourses.add(course);
+
                 course.addStudent(this);
                 allAssignments.clear();
                 for(Course c : registeredCourses) {
@@ -80,12 +81,12 @@ public class Student extends User {
     }
 
 
-    public void viewAllCourses (Level level) {
-        System.out.println("Courses for level " + level + " : ");
-            for(String course : level.getCourses()) {
-                System.out.println("- " + course);
-            }
-    }
+//    public void viewAllCourses () {
+//
+//        for(String course : level.getCourses()) {
+//            System.out.println("- " + course);
+//        }
+//    }
 
     public void viewAllAssignments () {
         if(allAssignments != null) {
@@ -99,20 +100,20 @@ public class Student extends User {
 
 
 
-    public void viewSolutions() {
-
-        if (submittedAssignments.isEmpty()) {
-            System.out.println("No submitted assignments yet.");
-            return;
-        }
-
-        for (Assignment assignment : submittedAssignments) {
-            String solution = assignment.getSolution(this);
-            System.out.println("Assignment: " + assignment.getAssignmentTitle());
-            System.out.println("Your solution: " + solution);
-            System.out.println("-------------------------------------------");
-        }
-    }
+//    public void viewSolutions() {
+//
+//        if (submittedAssignments.isEmpty()) {
+//            System.out.println("No submitted assignments yet.");
+//            return;
+//        }
+//
+//        for (Assignment assignment : submittedAssignments) {
+//            String solution = assignment.getSolution(this);
+//            System.out.println("Assignment: " + assignment.getAssignmentTitle());
+//            System.out.println("Your solution: " + solution);
+//            System.out.println("-------------------------------------------");
+//        }
+//    }
 
 
 
@@ -142,7 +143,7 @@ public class Student extends User {
 
     @Override
     public String toString() {
-        return "Student: " + fullName +
+        return "Student: " + getFullName() +
                 "Id: " + userID +
                 "Email: " + email;
     }

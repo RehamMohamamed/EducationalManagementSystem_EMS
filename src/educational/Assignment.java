@@ -5,20 +5,21 @@ import database.DAO.AssignmentDAO;
 import java.awt.geom.Arc2D;
 import java.util.HashMap;
 
+
 public class Assignment{
     private String assignmentTitle;
-    private String assignmentID;
+    private int assignmentID;
     private String assignmentDescription;
     private float maxGrade;
     private float studentGrade;
-//    private String studentSolution = "";
+    //    private String studentSolution = "";
     private HashMap <Integer , String> solutions = new HashMap<>();
     private HashMap <Integer , Float> grades = new HashMap<>();
     private String correctSolution;
     private Course course;
 
     public Assignment(){}
-    public Assignment(String assignmentTitle, String assignmentID, String assignmentDescription, float maxGrade , Course course){
+    public Assignment(String assignmentTitle, int assignmentID, String assignmentDescription, float maxGrade , Course course){
         this.assignmentTitle = assignmentTitle;
         this.assignmentID = assignmentID;
         this.assignmentDescription = assignmentDescription;
@@ -33,10 +34,10 @@ public class Assignment{
     public void setAssignmentTitle(String assignmentTitle) {
         this.assignmentTitle = assignmentTitle;
     }
-    public String getAssignmentID() {
+    public int getAssignmentID() {
         return assignmentID;
     }
-    public void setAssignmentID(String assignmentID) {
+    public void setAssignmentID(int assignmentID) {
         this.assignmentID = assignmentID;
     }
     public String getAssignmentDescription() {

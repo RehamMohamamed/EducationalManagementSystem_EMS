@@ -6,10 +6,10 @@ import java.sql.*;
 public class AssignmentDAO {
 
     // save solution
-    public static void saveSolution(int studentID, String assignmentID, String solution) {
+    public static void saveSolution(int studentID, int assignmentID, String solution) {
 
         String sql = """
-            INSERT INTO Assignment_Submissions(student_id, assignment_id, solution)
+            INSERT INTO Soluion(student_id, assignment_id, content)
             VALUES (?, ?, ?)
         """;
 
@@ -17,7 +17,7 @@ public class AssignmentDAO {
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, studentID);
-            ps.setString(2, assignmentID);
+            ps.setInt(2, assignmentID);
             ps.setString(3, solution);
             ps.executeUpdate();
 
@@ -27,7 +27,7 @@ public class AssignmentDAO {
     }
 
     // get solution
-    public static String getSolution(int studentID, String assignmentID) {
+    public static String getSolution(int studentID, int assignmentID) {
 
         String sql = """
             SELECT solution
@@ -39,7 +39,7 @@ public class AssignmentDAO {
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, studentID);
-            ps.setString(2, assignmentID);
+            ps.setInt(2, assignmentID);
 
             ResultSet rs = ps.executeQuery();
             if (rs.next())

@@ -2,20 +2,21 @@ package educational;
 
 public class User implements EducationalUser {
     // attributes
-        protected String userName;
-        protected String password;
-        protected int userID;
-        protected String fullName;
-        protected String email;
+    protected String userName;
+    protected String password;
+    protected static int userID;
+    protected String fName;
+    protected String lName;
+    protected String email;
 
     // constructors
     public User() {}
 
-    public User(String userName, String password, int userID, String fullName, String email) {
+    public User(String userName, String password, String fName, String lName , String email) {
         this.userName = userName;
         this.password = password;
-        this.userID = userID;
-        this.fullName = fullName;
+        this.fName = fName;
+        this.lName = lName;
         this.email = email;
     }
 
@@ -31,25 +32,17 @@ public class User implements EducationalUser {
     public int getUserID() {
         return userID;
     }
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
     public String getFullName() {
-        return fullName;
+        return fName + " "  + lName;
     }
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    public String getPassword() {
-        return password;
-    }
-
+    public void setfName(String fName) {this.fName = fName;}
+    public void setlName(String lName) {this.lName = lName;}
+    public String getEmail() {return email;}
+    public void setEmail(String email) {this.email = email;}
+    public String getPassword() {return password;}
+    public static void setUserID(int userID) {User.userID = userID;}
+    public String getfName() {return fName;}
+    public String getlName() {return lName;}
 
     // methods
     public boolean login(String username, String password){
@@ -59,11 +52,11 @@ public class User implements EducationalUser {
         return true;
     }
 
-    public void viewProfile(){
-        System.out.println("Full Name: " + this.fullName);
-        System.out.println("User Name: " + this.userName);
-        System.out.println("User ID: " + this.userID);
-        System.out.println("Email: " + this.email);
-    }
+//    public void viewProfile(){
+//        System.out.println("Full Name: " + getFullName());
+//        System.out.println("User Name: " + this.userName);
+//        System.out.println("User ID: " + this.userID);
+//        System.out.println("Email: " + this.email);
+//    }
 
 }
