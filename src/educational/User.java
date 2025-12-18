@@ -20,6 +20,7 @@ public class User implements EducationalUser {
         this.email = email;
     }
 
+
     // getter & setters
     public String getUserName() {
         return userName;

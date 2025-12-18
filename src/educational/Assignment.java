@@ -18,6 +18,7 @@ public class Assignment{
     private String correctSolution;
     private Course course;
 
+
     public Assignment(){}
     public Assignment(String assignmentTitle, int assignmentID, String assignmentDescription, float maxGrade , Course course){
         this.assignmentTitle = assignmentTitle;

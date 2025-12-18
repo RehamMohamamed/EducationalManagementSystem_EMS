@@ -22,6 +22,7 @@ public class CourseDAO {
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) course.setCourseId(rs.getInt(1));
             }
+
             return rows > 0;
         } catch (SQLException e) { e.printStackTrace(); return false; }
     }

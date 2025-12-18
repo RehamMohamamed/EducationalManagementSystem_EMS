@@ -25,6 +25,7 @@ public class DoctorDAO {
         } catch (SQLException e) { e.printStackTrace(); return false; }
     }
 
+
     public Doctor getDoctorById(int id) {
         String sql = "SELECT * FROM Doctors WHERE doctor_id=?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {

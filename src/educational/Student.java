@@ -12,6 +12,7 @@ public class Student extends User {
         super(userName , password ,  fName , lName ,  email);
     }
     //getters
+
     public ArrayList <Course> getRegisteredCourses() {
         return registeredCourses;
     }

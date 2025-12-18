@@ -11,6 +11,7 @@ public class DBConnection {
                     "encrypt=true;" +
                     "trustServerCertificate=true;";
 
+
     private static final String USER = "ems_user";
     private static final String PASSWORD = "1234";
 
