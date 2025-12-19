@@ -188,5 +188,42 @@ public class AssignmentDAO {
         return null; // لو الطالب ما سلّمش
     }
 
+    public static boolean removeAssignment(int assignmentId) {
+
+        String deleteSubmissions = """
+        DELETE FROM Student_assignment
+        WHERE assignment_id = ?
+    """;
+
+        String deleteAssignment = """
+        DELETE FROM Assignments
+        WHERE assignment_id = ?
+    """;
+
+        try (Connection conn = DBConnection.getConnection()) {
+
+            conn.setAutoCommit(false); // Transaction
+
+            try (PreparedStatement ps1 = conn.prepareStatement(deleteSubmissions);
+                 PreparedStatement ps2 = conn.prepareStatement(deleteAssignment)) {
+
+                ps1.setInt(1, assignmentId);
+                ps1.executeUpdate();
+
+                ps2.setInt(1, assignmentId);
+                int rows = ps2.executeUpdate();
+
+                conn.commit();
+                return rows > 0;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+
 
 }
