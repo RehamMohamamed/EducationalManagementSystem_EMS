@@ -3,6 +3,7 @@ package educational;
 import database.DAO.AssignmentDAO;
 import database.DAO.CourseDAO;
 import database.DAO.DoctorDAO;
+import educational.Assignment;
 
 public class Doctor extends User {
 
@@ -56,5 +57,16 @@ public class Doctor extends User {
         } else {
             System.out.println("Failed to create course!");
         }
+    }
+
+    public boolean removeAssignment(int assignmentID) {
+        boolean success = AssignmentDAO.removeAssignment(assignmentID);
+
+        if (success) {
+            System.out.println("Assignment removed successfully!");
+        } else {
+            System.out.println("Assignment not found or could not be removed.");
+        }
+        return success;
     }
 }
