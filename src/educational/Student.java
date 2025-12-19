@@ -2,147 +2,103 @@ package educational;
 
 import database.DAO.AssignmentDAO;
 import database.DAO.CourseDAO;
-import database.DAO.DoctorDAO;
 import database.DAO.StudentDAO;
 import java.util.ArrayList;
 
 public class Student extends User {
-    private ArrayList<Course> registeredCourses = new ArrayList<>();
-    private ArrayList<Assignment> allAssignments = new ArrayList<>();
-    private ArrayList<Assignment> submittedAssignments = new ArrayList<>();
 
-    // constructors
+    private ArrayList<Course> registeredCourses = new ArrayList<>();
+
     public Student() {}
 
-    public Student(String userName, String password, int userID, String fName, String lName, String email) {
-        super(userName, password, fName, lName, email);
-    }
-
-    // getters
-    public ArrayList<Course> getRegisteredCourses() {
-        return registeredCourses;
-    }
-
-    public ArrayList<Assignment> getAllAssignments() {
-        return allAssignments;
-    }
-
-    public ArrayList<Assignment> getSubmittedAssignments() {
-        return new ArrayList<>(submittedAssignments);
-    }
-
-    // methods
-    public void registerCourse(Course course) {
-        if (course != null) {
-            if (!registeredCourses.contains(course)) {
-                StudentDAO.registerInCourse(this.getUserID(), course.getCourseId());
-                registeredCourses.add(course);
-
-                course.addStudent(this);
-                allAssignments.clear();
-                for (Course c : registeredCourses) {
-                    allAssignments.addAll(c.getAssignments());
-                }
-            } else {
-                System.out.println("Course already registered");
-            }
-        } else {
-            System.out.println("Course is invalid");
-        }
-    }
-
-    public void submitAssignment(Assignment assignment, String solution) {
-        if (!registeredCourses.contains(assignment.getCourse())) {
-            System.out.println("You are not registered in this course");
-            return;
-        }
-
-        if (submittedAssignments.contains(assignment)) {
-            System.out.println("You already submitted this assignment!");
-            return;
-        }
-
-        submittedAssignments.add(assignment);
-        assignment.addSolution(this, solution);
-
-        System.out.println("Solution submitted successfully!");
-    }
-
-    // view registered courses
-    public void viewRegisterdCourses() {
-        if (!registeredCourses.isEmpty()) {
-            for (Course course : registeredCourses) {
-                System.out.println(course);
-                System.out.println("====================================================================");
-            }
-        } else {
-            System.out.println("Course list is empty");
-        }
-    }
-
-    public void viewAllAssignments() {
-        if (!AssignmentDAO.getAssignmentsForStudent(this.getUserID()).isEmpty()) {
-            for (Assignment assignment : AssignmentDAO.getAssignmentsForStudent(this.getUserID())) {
-                System.out.println(assignment);
-            }
-        } else {
-            System.out.println("There are no assignments yet!");
-        }
-    }
-
-
-
-    public void viewGrades() {
-
-        ArrayList<Assignment> assignments =
-                AssignmentDAO.getAssignmentsForStudent(this.getUserID());
-
-        if (assignments.isEmpty()) {
-            System.out.println("No submitted assignments yet!");
-            return;
-        }
-
-        System.out.println("===== Your Grades =====");
-
-        for (Assignment assignment : assignments) {
-
-            Float grade = assignment.getGrade(this); // خلاص موجودة جوه الـ object
-
-            System.out.println("Assignment: " + assignment.getAssignmentTitle());
-
-            if (grade == null)
-                System.out.println("Grade: Not graded yet.");
-            else
-                System.out.println("Grade: " + grade + " / " + assignment.getMaxGrade());
-
-            System.out.println("------------------------------------");
-        }
-    }
-
-
-    // Login
     @Override
-    public boolean login(String username , String password) {
-        Student s = StudentDAO.login(username , password);
-        return s != null;
-    }
+    public boolean login(String username, String password) {
 
-    // Sign Up
+        Student s = StudentDAO.login(username, password);
+        if (s == null) return false;
 
-//    public void signUp(String username, String password, String fName, String lName, String email) {
-//        StudentDAO.register(fName, lName, email, username, password);
-//    }
+        this.userID = s.userID;
+        this.userName = s.userName;
+        this.fName = s.fName;
+        this.lName = s.lName;
+        this.email = s.email;
+        this.registeredCourses = s.registeredCourses;
 
-    @Override
-    public String toString() {
-        return "Student: " + getFullName() +
-               " Id: " + userID +
-               " Email: " + email;
+        return true;
     }
 
     @Override
     public int getUserID() {
-       return StudentDAO.getStudentId(this.userName);
+        return userID;
     }
 
+    public void submitAssignment(Assignment assignment, String solution) {
+
+        int assignmentId = assignment.getAssignmentID();
+        int courseId = assignment.getCourseId();
+
+        if (!CourseDAO.isStudentRegistered(userID, courseId)) {
+            System.out.println("You are not registered in this course");
+            return;
+        }
+
+        if (AssignmentDAO.isSubmitted(userID, assignmentId)) {
+            System.out.println("You already submitted this assignment!");
+            return;
+        }
+
+        AssignmentDAO.saveSolution(userID, assignmentId, solution);
+        System.out.println("Solution submitted successfully!");
+    }
+
+    public void viewAllAssignments() {
+
+        var list = AssignmentDAO.getAssignmentsForStudent(userID);
+
+        if (list.isEmpty()) {
+            System.out.println("There are no assignments yet!");
+            return;
+        }
+
+        for (Assignment a : list) {
+            System.out.println(a);
+        }
+    }
+
+    public void registerCourse(int courseId) {
+
+        int studentId = this.getUserID();
+
+        // check لو مسجل قبل كده
+        if (CourseDAO.isStudentRegistered(studentId, courseId)) {
+            System.out.println("You are already registered in this course!");
+            return;
+        }
+
+        boolean success = StudentDAO.registerInCourse(studentId, courseId);
+
+        if (success) {
+            System.out.println("Course registered successfully!");
+        }
+    }
+
+
+    public void viewGrades() {
+
+        var list = AssignmentDAO.getAssignmentsForStudent(userID);
+
+        System.out.println("===== Your Grades =====");
+
+        for (Assignment a : list) {
+            System.out.println("Assignment: " + a.getAssignmentTitle());
+
+            if (a.getStudentGrade() == null)
+                System.out.println("Grade: Not graded yet");
+            else
+                System.out.println("Grade: " + a.getStudentGrade()
+                        + " / " + a.getMaxGrade());
+
+            System.out.println("----------------------");
+        }
+    }
 }

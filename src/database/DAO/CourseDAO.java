@@ -1,49 +1,73 @@
 package database.DAO;
 
-import educational.Course;
-import educational.Doctor;
+import database.DBConnection;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CourseDAO {
 
-    private Connection connection;
-    public CourseDAO(Connection connection) { this.connection = connection; }
+    public static boolean isStudentRegistered(int studentId, int courseId) {
 
-    public boolean addCourse(Course course) {
-        String sql = "INSERT INTO Courses (course_code,course_name,doc_id) VALUES (?,?,?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            stmt.setString(1, course.getCourseCode());
-            stmt.setString(2, course.getCourseName());
-            if (course.getDoctor() != null) stmt.setInt(3, course.getDoctor().getUserID());
-            else stmt.setNull(3, Types.INTEGER);
-            int rows = stmt.executeUpdate();
-            try (ResultSet rs = stmt.getGeneratedKeys()) {
-                if (rs.next()) course.setCourseId(rs.getInt(1));
-            }
+        String sql = """
+        SELECT 1 FROM Student_course
+        WHERE student_id = ? AND course_id = ?
+        """;
 
-            return rows > 0;
-        } catch (SQLException e) { e.printStackTrace(); return false; }
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, studentId);
+            ps.setInt(2, courseId);
+            return ps.executeQuery().next();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
+    public static void viewAllCourses() {
 
-    public List<Course> getAllCourses() {
-        List<Course> courses = new ArrayList<>();
-        String sql = "SELECT * FROM Courses";
-        try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+        String sql = "SELECT course_id, course_name, course_code FROM Courses";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
             while (rs.next()) {
-                Course c = new Course();
-                c.setCourseId(rs.getInt("course_id"));
-                c.setCourseCode(rs.getString("course_code"));
-                c.setCourseName(rs.getString("course_name"));
-                int docId = rs.getInt("doc_id");
-                if (!rs.wasNull()) {
-                    DoctorDAO dao = new DoctorDAO(connection);
-                    c.setDoctor(dao.getDoctorById(docId));
-                }
-                courses.add(c);
+                System.out.println(
+                        rs.getInt("course_id") + " - " +
+                                rs.getString("course_name") +
+                                " (" + rs.getString("course_code") + ")"
+                );
             }
-        } catch (SQLException e) { e.printStackTrace(); }
-        return courses;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+
+
+    public static boolean createCourse(String courseName,String courseCode, int doctorId) {
+
+        String sql = """
+        INSERT INTO Courses (course_name,course_code,  doc_id)
+        VALUES (?, ?, ?)
+    """;
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, courseName);
+            ps.setString(2, courseCode);
+            ps.setInt(3, doctorId);
+
+            ps.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println("❌ Course code already exists OR DB error");
+            return false;
+        }
+    }
+
+
 }

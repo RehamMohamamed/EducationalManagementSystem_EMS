@@ -1,84 +1,60 @@
 package educational;
-import database.DAO.DoctorDAO;
-import database.DAO.StudentDAO;
 
-import java.util.ArrayList;
-import java.util.List;
+import database.DAO.AssignmentDAO;
+import database.DAO.CourseDAO;
+import database.DAO.DoctorDAO;
 
 public class Doctor extends User {
 
-    private List<Course> teachingCourses = new ArrayList<>();
-    private List<Assignment> assignments = new ArrayList<>();
-
     public Doctor() {}
 
-    public Doctor(String userName, String password,
-                  String firstName, String lastName, String email) {
-        super(userName, password, firstName, lastName, email);
-    }
-
-    public List<Course> getTeachingCourses() {
-        return teachingCourses;
-    }
-
-    public List<Assignment> getAssignments() {
-        return assignments;
-    }
-
-    public void addCourse(Course course) {
-        teachingCourses.add(course);
-    }
-    public void createAssignment(String assignmentName , int assignmentID , String description , float maxGrade , Course course) {
-        Assignment a = new Assignment(assignmentName, assignmentID, description, maxGrade , course);
-        assignments.add(a);
-        course.addAssignment(a);
-    }
-    public void gradeAssignment(Student student, Assignment assignment , float grade) {
-
-
-
-        // check if the student submitted
-        String solution = assignment.getSolution(student);
-
-        if (solution == null) {
-            System.out.println("Student did not submit this assignment!");
-            return;
-        }
-
-        // show the student's solution first
-        System.out.println("----- Student Solution -----");
-        System.out.println(solution);
-        System.out.println("----------------------------");
-
-        // validate grade
-        if (grade < 0 || grade > assignment.getMaxGrade()) {
-            System.out.println("Invalid grade! Must be between 0 and " + assignment.getMaxGrade());
-            return;
-        }
-
-
-
-        assignment.setGrade(student, grade);
-
-        System.out.println("Grade added successfully!");
-    }
     @Override
-    public boolean login(String username , String password) {
-        Doctor d = DoctorDAO.login(username , password);
-        return d != null;
-    }
-//    public void signUp(String username, String password, String fName, String lName, String email) {
-//        DoctorDAO.register(fName, lName, email, username, password);
-//    }
+    public boolean login(String username, String password) {
 
+        Doctor d = DoctorDAO.login(username, password);
+        if (d == null) return false;
 
-    @Override
-    public String toString() {
-        return "Doctor: " + getFullName() + " | Email: " + getEmail();
+        this.userID = d.userID;
+        this.userName = d.userName;
+        this.fName = d.fName;
+        this.lName = d.lName;
+        this.email = d.email;
+
+        return true;
     }
 
     @Override
     public int getUserID() {
-        return DoctorDAO.getDoctorId(this.getUserName());
+        return userID;
+    }
+
+    public void gradeAssignment(Student student, Assignment assignment, float grade) {
+
+        if (grade < 0 || grade > assignment.getMaxGrade()) {
+            System.out.println("Invalid grade");
+            return;
+        }
+
+        AssignmentDAO.setGrade(
+                student.getUserID(),
+                assignment.getAssignmentID(),
+                grade
+        );
+
+        System.out.println("Grade added successfully!");
+    }
+    public void createCourse(String courseName, String courseCode) {
+
+        boolean success = CourseDAO.createCourse(
+                courseName,
+                courseCode,
+                this.getUserID()
+        );
+
+        if (success) {
+            System.out.println("Course created successfully!");
+        } else {
+            System.out.println("Failed to create course!");
+        }
     }
 }
