@@ -1,8 +1,8 @@
 package educational;
 
 import database.DBConnection;
-import database.DAO.StudentDAO;
-import database.DAO.DoctorDAO;
+import database.DAO.*;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -12,7 +12,7 @@ public class Main {
 
         // -----------------------------
         // 2️⃣ Login Student
-        Student student = StudentDAO.login("reem12", "123"); // استخدمي بيانات موجودة في DB
+        Student student = StudentDAO.login("cris", "cris2005"); // استخدمي بيانات موجودة في DB
         if (student != null) {
             System.out.println("✅ Welcome Student: " + student.getFullName());
         } else {
@@ -22,7 +22,7 @@ public class Main {
 
         // -----------------------------
         // 3️⃣ Login Doctor
-        Doctor doctor = DoctorDAO.login("ahmed12", "1234"); // استخدمي بيانات موجودة في DB
+        Doctor doctor = DoctorDAO.login("reham", "rehame2005"); // استخدمي بيانات موجودة في DB
         if (doctor != null) {
             System.out.println("✅ Welcome Doctor: " + doctor.getFullName());
         } else {
@@ -41,20 +41,11 @@ public class Main {
         student.viewAllAssignments();
 
         // -----------------------------
-        // 6️⃣ تقديم واجب إذا موجود
-        if (!student.getAllAssignments().isEmpty()) {
-            Assignment assignment = student.getAllAssignments().get(0);
-            student.submitAssignment(assignment, "My solution");
-            System.out.println("✅ Assignment submitted!");
-        }
+
 
         // -----------------------------
         // 7️⃣ الدكتور يضع درجة إذا فيه واجب
-        if (!student.getAllAssignments().isEmpty()) {
-            Assignment assignment = student.getAllAssignments().get(0);
-            doctor.gradeAssignment(student, assignment, 95); // مثال grade
-            System.out.println("✅ Assignment graded by Doctor!");
-        }
+
 
         // -----------------------------
         // 8️⃣ الطالب يشوف درجاته

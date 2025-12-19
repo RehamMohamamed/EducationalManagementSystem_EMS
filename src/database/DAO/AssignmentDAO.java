@@ -71,28 +71,41 @@ public class AssignmentDAO {
 
     // 4. Get All Assignments for Student Courses: جلب كل الواجبات للكورسات اللي الطالب مسجل فيها
     public static ArrayList<Assignment> getAssignmentsForStudent(int studentId) {
+
         ArrayList<Assignment> list = new ArrayList<>();
-        String query = "SELECT a.* FROM Assignments a " +
-                "JOIN Student_course sc ON a.courseID = sc.course_id " +
-                "WHERE sc.student_id = ?";
+
+        String query =
+                "SELECT a.assignment_id, a.title, a.descri_ption, a.max_degree, sa.grade " +
+                        "FROM Assignments a " +
+                        "JOIN Student_course sc ON a.courseID = sc.course_id " +
+                        "LEFT JOIN Student_Assignment sa " +
+                        "ON sa.assignment_id = a.assignment_id AND sa.student_id = ? " +
+                        "WHERE sc.student_id = ?";
+
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setInt(1, studentId);
+            stmt.setInt(2, studentId);
+
             ResultSet rs = stmt.executeQuery();
+
             while (rs.next()) {
-                // ملاحظة: الـ Constructor بتاعك بيحتاج كائن Course، ممكن تبعت null أو تعدله
                 Assignment asm = new Assignment(
                         rs.getString("title"),
                         rs.getInt("assignment_id"),
-                        rs.getString("description"),
+                        rs.getString("descri_ption"),
                         rs.getFloat("max_degree"),
-                        null
+                        rs.getObject("grade") == null ? null : rs.getFloat("grade")
                 );
-
                 list.add(asm);
             }
-        } catch (SQLException e) { e.printStackTrace(); }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return list;
     }
+
 }

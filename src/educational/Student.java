@@ -1,5 +1,7 @@
 package educational;
 
+import database.DAO.AssignmentDAO;
+import database.DAO.CourseDAO;
 import database.DAO.DoctorDAO;
 import database.DAO.StudentDAO;
 import java.util.ArrayList;
@@ -79,8 +81,8 @@ public class Student extends User {
     }
 
     public void viewAllAssignments() {
-        if (!allAssignments.isEmpty()) {
-            for (Assignment assignment : allAssignments) {
+        if (!AssignmentDAO.getAssignmentsForStudent(this.getUserID()).isEmpty()) {
+            for (Assignment assignment : AssignmentDAO.getAssignmentsForStudent(this.getUserID())) {
                 System.out.println(assignment);
             }
         } else {
@@ -88,23 +90,35 @@ public class Student extends User {
         }
     }
 
+
+
     public void viewGrades() {
-        if (submittedAssignments.isEmpty()) {
+
+        ArrayList<Assignment> assignments =
+                AssignmentDAO.getAssignmentsForStudent(this.getUserID());
+
+        if (assignments.isEmpty()) {
             System.out.println("No submitted assignments yet!");
             return;
         }
 
         System.out.println("===== Your Grades =====");
-        for (Assignment assignment : submittedAssignments) {
-            Float grade = assignment.getGrade(this);
+
+        for (Assignment assignment : assignments) {
+
+            Float grade = assignment.getGrade(this); // خلاص موجودة جوه الـ object
+
             System.out.println("Assignment: " + assignment.getAssignmentTitle());
+
             if (grade == null)
                 System.out.println("Grade: Not graded yet.");
             else
                 System.out.println("Grade: " + grade + " / " + assignment.getMaxGrade());
+
             System.out.println("------------------------------------");
         }
     }
+
 
     // Login
     @Override
@@ -125,4 +139,10 @@ public class Student extends User {
                " Id: " + userID +
                " Email: " + email;
     }
+
+    @Override
+    public int getUserID() {
+       return StudentDAO.getStudentId(this.userName);
+    }
+
 }

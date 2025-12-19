@@ -105,4 +105,21 @@ public class DoctorDAO {
         }
         return null;
     }
+
+    public static int getDoctorId(String username) {
+        String query = "SELECT doctor_id FROM Doctors WHERE username = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("doctor_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
 }
