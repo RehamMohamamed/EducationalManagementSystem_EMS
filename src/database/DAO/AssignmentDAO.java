@@ -10,7 +10,7 @@ public class AssignmentDAO {
     // 1. Submit Solution: حفظ الإجابة في جدول مناسب
     public static void saveSolution(int studentId, int assignmentId, String solution) {
         String sql = """
-            INSERT INTO Assignment_Submissions(student_id, assignment_id, solution)
+            INSERT INTO Student_assignment(student_id, assignment_id, answer)
             VALUES (?, ?, ?)
         """;
 
@@ -31,8 +31,8 @@ public class AssignmentDAO {
     // 2. Get Solution: جلب إجابة طالب معينة
     public static String getSolution(int studentId, int assignmentId) {
         String sql = """
-            SELECT solution
-            FROM Assignment_Submissions
+            SELECT answer
+            FROM Student_assignment
             WHERE student_id = ? AND assignment_id = ?
         """;
 
@@ -44,7 +44,7 @@ public class AssignmentDAO {
 
             ResultSet rs = ps.executeQuery();
             if (rs.next())
-                return rs.getString("solution");
+                return rs.getString("answer");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -84,11 +84,12 @@ public class AssignmentDAO {
                 // ملاحظة: الـ Constructor بتاعك بيحتاج كائن Course، ممكن تبعت null أو تعدله
                 Assignment asm = new Assignment(
                         rs.getString("title"),
-                        String.valueOf(rs.getInt("assignment_id")),
-                        rs.getString("descri_ption"),
+                        rs.getInt("assignment_id"),
+                        rs.getString("description"),
                         rs.getFloat("max_degree"),
                         null
                 );
+
                 list.add(asm);
             }
         } catch (SQLException e) { e.printStackTrace(); }

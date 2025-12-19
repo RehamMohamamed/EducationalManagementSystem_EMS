@@ -1,4 +1,6 @@
 package educational;
+import database.DAO.DoctorDAO;
+import database.DAO.StudentDAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +62,14 @@ public class Doctor extends User {
 
         System.out.println("Grade added successfully!");
     }
+    @Override
+    public boolean login(String username , String password) {
+        Doctor d = DoctorDAO.login(username , password);
+        return d != null;
+    }
+//    public void signUp(String username, String password, String fName, String lName, String email) {
+//        DoctorDAO.register(fName, lName, email, username, password);
+//    }
 
 
     @Override

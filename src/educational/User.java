@@ -4,7 +4,7 @@ public abstract class User implements EducationalUser {
     // attributes
     protected String userName;
     protected String password;
-    protected static int userID;
+    protected  int userID;
     protected String fName;
     protected String lName;
     protected String email;
@@ -57,8 +57,8 @@ public abstract class User implements EducationalUser {
         return password;
     }
 
-    public static void setUserID(int userID) {
-        User.userID = userID;
+    public  void setUserID(int userID) {
+        this.userID = userID;
     }
 
     public String getfName() {
@@ -69,9 +69,13 @@ public abstract class User implements EducationalUser {
         return lName;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     // methods
-    public abstract boolean login(String username, String password);
-    public abstract void signUp(String username, String password, String fName, String lName, String email);
+    public abstract boolean login(String username ,String password);
+//    public abstract void signUp(String username, String password, String fName, String lName, String email);
 
     public boolean logout() {
         return true;

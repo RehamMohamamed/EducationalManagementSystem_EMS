@@ -1,5 +1,6 @@
 package educational;
 
+import database.DAO.DoctorDAO;
 import database.DAO.StudentDAO;
 import java.util.ArrayList;
 
@@ -32,7 +33,7 @@ public class Student extends User {
     public void registerCourse(Course course) {
         if (course != null) {
             if (!registeredCourses.contains(course)) {
-                StudentDAO.registerInCourse(this.getUserID(), course.getCourseID());
+                StudentDAO.registerInCourse(this.getUserID(), course.getCourseId());
                 registeredCourses.add(course);
 
                 course.addStudent(this);
@@ -107,15 +108,16 @@ public class Student extends User {
 
     // Login
     @Override
-    public boolean login(String username, String password) {
-        return StudentDAO.login(username, password);
+    public boolean login(String username , String password) {
+        Student s = StudentDAO.login(username , password);
+        return s != null;
     }
 
     // Sign Up
-    @Override
-    public void signUp(String username, String password, String fName, String lName, String email) {
-        StudentDAO.register(fName, lName, email, username, password);
-    }
+
+//    public void signUp(String username, String password, String fName, String lName, String email) {
+//        StudentDAO.register(fName, lName, email, username, password);
+//    }
 
     @Override
     public String toString() {
