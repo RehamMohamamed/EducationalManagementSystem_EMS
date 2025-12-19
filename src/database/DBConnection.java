@@ -6,7 +6,7 @@ import java.sql.SQLException;
 public class DBConnection {
 
     private static final String URL =
-            "jdbc:sqlserver://DESKTOP-CIJEEVD:1433;" +
+            "jdbc:sqlserver://localhost:1433;" +
                     "databaseName=Student_System;" +
                     "encrypt=true;" +
                     "trustServerCertificate=true;";
@@ -18,10 +18,10 @@ public class DBConnection {
     public static Connection getConnection() {
         try {
             Connection con = DriverManager.getConnection(URL , USER , PASSWORD);
-            System.out.println("✅ Database connected successfully");
+//            System.out.println("✅ Database connected successfully");
             return con;
         } catch (SQLException e) {
-            System.out.println("❌ Database connection failed");
+//            System.out.println("❌ Database connection failed");
             e.printStackTrace();
             System.out.println(e.getMessage());
             return null;

@@ -29,9 +29,7 @@ public abstract class User implements EducationalUser {
         this.userName = userName;
     }
 
-    public int getUserID() {
-        return userID;
-    }
+    public abstract int getUserID();
 
     public String getFullName() {
         return fName + " " + lName;

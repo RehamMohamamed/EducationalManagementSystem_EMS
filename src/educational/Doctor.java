@@ -76,4 +76,9 @@ public class Doctor extends User {
     public String toString() {
         return "Doctor: " + getFullName() + " | Email: " + getEmail();
     }
+
+    @Override
+    public int getUserID() {
+        return DoctorDAO.getDoctorId(this.getUserName());
+    }
 }

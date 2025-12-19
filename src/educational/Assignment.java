@@ -2,7 +2,6 @@ package educational;
 
 import database.DAO.AssignmentDAO;
 
-import java.awt.geom.Arc2D;
 import java.util.HashMap;
 
 
@@ -11,7 +10,7 @@ public class Assignment{
     private int assignmentID;
     private String assignmentDescription;
     private float maxGrade;
-    private float studentGrade;
+    private Float studentGrade;
     //    private String studentSolution = "";
     private HashMap <Integer , String> solutions = new HashMap<>();
     private HashMap <Integer , Float> grades = new HashMap<>();
@@ -19,7 +18,7 @@ public class Assignment{
     private Course course;
 
 
-    public Assignment(){}
+    public Assignment(String title, int assignmentId, String descriPtion, float maxDegree, Float aFloat){}
     public Assignment(String assignmentTitle, int assignmentID, String assignmentDescription, float maxGrade , Course course){
         this.assignmentTitle = assignmentTitle;
         this.assignmentID = assignmentID;
