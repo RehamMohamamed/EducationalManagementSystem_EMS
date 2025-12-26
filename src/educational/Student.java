@@ -1,8 +1,9 @@
 package educational;
 
-import database.DAO.AssignmentDAO;
-import database.DAO.CourseDAO;
-import database.DAO.StudentDAO;
+
+import database.AssignmentDAO;
+import database.CourseDAO;
+import database.StudentDAO;
 import java.util.ArrayList;
 
 public class Student extends User {
@@ -47,7 +48,7 @@ public class Student extends User {
             return;
         }
 
-        AssignmentDAO.saveSolution(userID, assignmentId, solution);
+        AssignmentDAO.submitAssignmentAnswer(userID, assignmentId, solution);
         System.out.println("Solution submitted successfully!");
     }
 

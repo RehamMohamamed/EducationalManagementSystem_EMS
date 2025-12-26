@@ -1,4 +1,10 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package database;
+
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -18,11 +24,11 @@ public class DBConnection {
     public static Connection getConnection() {
         try {
             Connection con = DriverManager.getConnection(URL , USER , PASSWORD);
-//            System.out.println("✅ Database connected successfully");
+//            System.out.println("Database connected successfully");
             return con;
         } catch (SQLException e) {
-//            System.out.println("❌ Database connection failed");
-            e.printStackTrace();
+//            System.out.println("Database connection failed");
+            
             System.out.println(e.getMessage());
             return null;
         }

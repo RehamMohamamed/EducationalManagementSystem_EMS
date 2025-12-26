@@ -1,4 +1,6 @@
+
 package educational;
+
 
 public class Course {
 

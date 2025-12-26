@@ -1,4 +1,7 @@
+
 package educational;
+
+
 
 public class Assignment {
 
@@ -8,6 +11,16 @@ public class Assignment {
     private float maxGrade;
     private Float studentGrade;
     private int courseId;   // مهم جدًا
+    
+    public Assignment(String title, int id, String desc,
+                      float maxGrade, int courseId) {
+
+        this.assignmentTitle = title;
+        this.assignmentID = id;
+        this.assignmentDescription = desc;
+        this.maxGrade = maxGrade;
+        this.courseId = courseId;
+    }
 
     public Assignment(String title, int id, String desc,
                       float maxGrade, Float grade, int courseId) {
