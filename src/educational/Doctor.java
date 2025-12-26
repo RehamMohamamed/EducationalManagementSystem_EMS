@@ -1,8 +1,8 @@
 package educational;
 
-import database.DAO.AssignmentDAO;
-import database.DAO.CourseDAO;
-import database.DAO.DoctorDAO;
+import database.AssignmentDAO;
+import database.CourseDAO;
+import database.DoctorDAO;
 import educational.Assignment;
 
 public class Doctor extends User {
@@ -17,9 +17,9 @@ public class Doctor extends User {
 
         this.userID = d.userID;
         this.userName = d.userName;
-        this.fName = d.fName;
-        this.lName = d.lName;
-        this.email = d.email;
+//        this.fName = d.fName;
+//        this.lName = d.lName;
+//        this.email = d.email;
 
         return true;
     }
@@ -44,18 +44,22 @@ public class Doctor extends User {
 
         System.out.println("Grade added successfully!");
     }
-    public void createCourse(String courseName, String courseCode) {
+    
+    int docId = this.getUserID();
+    public static boolean createCourse(String courseName, String courseCode,int docId) {
 
         boolean success = CourseDAO.createCourse(
                 courseName,
                 courseCode,
-                this.getUserID()
+                docId
         );
 
         if (success) {
             System.out.println("Course created successfully!");
+            return true;
         } else {
             System.out.println("Failed to create course!");
+            return false;
         }
     }
 
@@ -69,4 +73,6 @@ public class Doctor extends User {
         }
         return success;
     }
+}
+
 }
