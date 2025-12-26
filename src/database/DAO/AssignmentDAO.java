@@ -59,7 +59,7 @@ public class AssignmentDAO {
     }
 
     
-    //get assignments + grades
+    // get assignment and grade
     public static ArrayList<Assignment> getAssignmentsForStudent(int studentId) {
 
         ArrayList<Assignment> assignments = new ArrayList<>();
@@ -117,7 +117,7 @@ public class AssignmentDAO {
     }
 
  
-    //Set Grade
+    // set grade
     public static void setGrade(int studentId, int assignmentId, float grade) {
 
         String sql = """
@@ -206,7 +206,7 @@ public class AssignmentDAO {
         return null; // لو الطالب ما سلّمش
     }
 
-    //delete assignmnet from doctor and student systems
+    //remove the assignment form both sides doc and student
     public static boolean removeAssignment(int assignmentId) {
 
         String deleteSubmissions = """
@@ -276,7 +276,33 @@ public class AssignmentDAO {
         return 0;
     }
     
-    
+    //used in remove assignment
+    public static int getAssignmentIdByTitle2(String title) {
+        String sql = """
+            SELECT assignment_id
+                        FROM Assignments
+                        WHERE title = ?
+
+        """;
+
+        try (Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, title);
+            //ps.setInt(2, doctorId);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("assignment_id");
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return 0; // لو مش موجود
+    }
+   
     // fetch assignmet question to answer it
     public static String getAssignmentDescription(int assignmentId, int courseId) {
         String sql = "SELECT descri_ption FROM Assignments WHERE assignment_id = ? AND courseID = ?";
@@ -340,7 +366,7 @@ public class AssignmentDAO {
             return assignments;
         }
 
-        //fetch assignments that doctor created to remove from it
+    //fetch assignments that doctor created to remove from it
 
         public static List<String> getAssignmentTitlesByDoctor(int doctorId) {
             List<String> titles = new ArrayList<>();
@@ -419,6 +445,7 @@ public class AssignmentDAO {
 
             return false; // لو حصل خطأ أو ما فيش assignments
         }
+
 
 }
 
