@@ -14,26 +14,26 @@ public class DoctorDAO {
         this.connection = connection;
     }
 
-    // إضافة دكتور جديد
-    public boolean addDoctor(Doctor doctor, String password) {
-        String sql = "INSERT INTO Doctors (username, email, first_name, last_name, password) VALUES (?,?,?,?,?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            stmt.setString(1, doctor.getUserName());
-            stmt.setString(2, doctor.getEmail());
-            stmt.setString(3, doctor.getfName());
-            stmt.setString(4, doctor.getlName());
-            stmt.setString(5, password);
-
-            int rows = stmt.executeUpdate();
-            try (ResultSet rs = stmt.getGeneratedKeys()) {
-                if (rs.next()) doctor.setUserID(rs.getInt(1));
-            }
-            return rows > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+//    // إضافة دكتور جديد
+//    public boolean addDoctor(Doctor doctor, String password) {
+//        String sql = "INSERT INTO Doctors (username, email, first_name, last_name, password) VALUES (?,?,?,?,?)";
+//        try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+//            stmt.setString(1, doctor.getUserName());
+//            stmt.setString(2, doctor.getEmail());
+//            stmt.setString(3, doctor.getfName());
+//            stmt.setString(4, doctor.getlName());
+//            stmt.setString(5, password);
+//
+//            int rows = stmt.executeUpdate();
+//            try (ResultSet rs = stmt.getGeneratedKeys()) {
+//                if (rs.next()) doctor.setUserID(rs.getInt(1));
+//            }
+//            return rows > 0;
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//            return false;
+//        }
+//    }
 
     // جلب دكتور بالـ ID
     public Doctor getDoctorById(int id) {
@@ -53,7 +53,7 @@ public class DoctorDAO {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return null;
     }
@@ -74,7 +74,7 @@ public class DoctorDAO {
                 doctors.add(d);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return doctors;
     }
@@ -101,7 +101,7 @@ public class DoctorDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return null;
     }
@@ -118,7 +118,7 @@ public class DoctorDAO {
                 return rs.getInt("doctor_id");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return -1;
     }
